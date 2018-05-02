@@ -2,11 +2,14 @@ const paper = document.getElementById("paper");
 const ctx = paper.getContext("2d");
 let w = document.body.clientWidth - 4;
 let h = document.body.clientHeight - 4;
+	let mobile   = /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent);
+	let start = mobile ? "touchstart" : "mousedown";
+	let end = mobile ? "touchend" : "mouseup";
 token = false;
 onState = false;
-let r = 39;
-let g = 51;
-let b = 68;
+let r = 29;
+let g = 41;
+let b = 48;
 
 setTimeout(() => {
     document.getElementById("title").classList.remove("fadeIn");
@@ -39,7 +42,7 @@ let ranNum = getRandomIntInclusive(0, 255);
 let opacity = 1;
 
 function getColor() {
-    return "rgb(" + getRandomIntInclusive(100, 255) + "," + getRandomIntInclusive(100, 255) + "," + getRandomIntInclusive(100, 255) + ")";
+    return "rgb(" + getRandomIntInclusive(50, 255) + "," + getRandomIntInclusive(50, 255) + "," + getRandomIntInclusive(50, 255) + ")";
 }
 
 function render(el, a, b, c, d, color1, color2) {
@@ -88,11 +91,11 @@ function flashScreen() {
         g--;
         b--;
 
-        if (r === 29) {
+        if (r === 19) {
             clearInterval(flash);
-            r = 39;
-            g = 51;
-            b = 68;
+            r = 29;
+            g = 41;
+            b = 48;
         }
     }, 24);
 }
@@ -104,25 +107,24 @@ function flashBlue() {
         r--;
         g--;
 
-        if (r === 29) {
+        if (r === 19) {
             clearInterval(flashB);
-            r = 39;
-            g = 51;
-            b = 68;
+            r = 29;
+            g = 41;
+            b = 48;
         }
     }, 24);
 }
 
-document.getElementById("page").addEventListener("click", function (e) {
+document.getElementById("page").addEventListener(start, function (e) {
     e.preventDefault();
-
-
+// alert(e.touches[0].pageX+" "+ e.touches[0].pageY);
     if (token === false) {
         if (onState === false) {
             onState = true;
             flashBlue();
 
-            ctx.translate(e.clientX, e.clientY);
+            ctx.translate(e.clientX || e.touches[0].pageX, e.clientY || e.touches[0].pageY);
             ctx.scale(0.4, 0.4);
             let i = 2;
             let a = getRandomIntInclusive(1, 180);
@@ -149,7 +151,7 @@ document.getElementById("page").addEventListener("click", function (e) {
     } else {
         ctx.setTransform(1, 0, 0, 1, 0, 0);
         ctx.restore();
-        ctx.translate(e.clientX, e.clientY);
+        ctx.translate(e.clientX || e.touches[0].pageX, e.clientY || e.touches[0].pageY);
         ctx.scale(0.4, 0.4);
         flashBlue();
         let i = 2;
