@@ -2,9 +2,9 @@ const paper = document.getElementById("paper");
 const ctx = paper.getContext("2d");
 let w = document.body.clientWidth - 4;
 let h = document.body.clientHeight - 4;
-	let mobile   = /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent);
-	let start = mobile ? "touchstart" : "mousedown";
-	let end = mobile ? "touchend" : "mouseup";
+let mobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent);
+let start = mobile ? "touchstart" : "mousedown";
+let end = mobile ? "touchend" : "mouseup";
 token = false;
 onState = false;
 let r = 29;
@@ -43,6 +43,12 @@ let opacity = 1;
 
 function getColor() {
     return "rgb(" + getRandomIntInclusive(50, 255) + "," + getRandomIntInclusive(50, 255) + "," + getRandomIntInclusive(50, 255) + ")";
+}
+
+function dwnload() {
+    let download = document.querySelector(".download-container");
+    let image = document.getElementById("paper").toDataURL("image/png").replace("image/png", "image/octet-stream");
+    download.setAttribute("href", image);
 }
 
 function render(el, a, b, c, d, color1, color2) {
@@ -118,7 +124,7 @@ function flashBlue() {
 
 document.getElementById("page").addEventListener(start, function (e) {
     e.preventDefault();
-// alert(e.touches[0].pageX+" "+ e.touches[0].pageY);
+    // alert(e.touches[0].pageX+" "+ e.touches[0].pageY);
     if (token === false) {
         if (onState === false) {
             onState = true;
